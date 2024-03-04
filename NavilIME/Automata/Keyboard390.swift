@@ -90,7 +90,7 @@ class Keyboard390 : Keyboard {
             // 겹받침
             "xq":Jongsung.Kiyeoksios,  // ᆪ
             "s!":Jongsung.Nieuncieuc,  // ᆬ <--  1->! 로 해야 정확할듯함.
-            "sm":Jongsung.Nieunhieuh,// ㄶ <--
+            "s1":Jongsung.Nieunhieuh,// ㄶ <--
             "wx":Jongsung.Rieulkiyeok, // ㄺ <--
             "wz":Jongsung.Rieulmieum, // ㄻ <--
             "w3":Jongsung.Rieulpieup,  // ᆲ
