@@ -89,18 +89,25 @@ class Keyboard390 : Keyboard {
                 
             // 겹받침
             "xq":Jongsung.Kiyeoksios,  // ᆪ
-            "s1":Jongsung.Nieuncieuc,  // ᆬ
+            "s!":Jongsung.Nieuncieuc,  // ᆬ <--  1->! 로 해야 정확할듯함.
+            "sm":Jongsung.Nieunhieuh,// ㄶ <--
+            "wx":Jongsung.Rieulkiyeok, // ㄺ <--
+            "wz":Jongsung.Rieulmieum, // ㄻ <--
             "w3":Jongsung.Rieulpieup,  // ᆲ
             "wq":Jongsung.Rieulsios,   // ᆳ
             "wW":Jongsung.Rieulthieuth,// ᆴ
             "wQ":Jongsung.Rieulphieuph,// ᆵ
+            "w1":Jongsung.Rieulhieuh, // ㅀ < --
+            "3q":Jongsung.Pieupsios,// ㅄ <--
+
+
         ]
         
         // 기타 기호, 숫자 레이아웃
         self.etc_layout = [
             "T":";",    "Y":"<",    "U":"7",    "I":"8",    "O":"9",    "P":">",
             "G":"/",    "H":"'",    "J":"4",    "K":"5",    "L":"6",
-            "B":"!",    "N":"0",    "M":"1",    "<":"2",    ">":"3", "`":"₩" // 원화 입력을 mac os 입력키와 같게 하기 추가
+            "B":"!",    "N":"0",    "M":"1",    "<":"2",    ">":"3",    "`":"₩" // 원화 입력을 mac os 입력키와 같게 하기 추가
         ]
     }
     
