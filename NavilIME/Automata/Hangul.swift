@@ -91,6 +91,7 @@ struct Automata {
 
     mutating func run() -> Composition{
         var comp:Composition = Composition()
+        
         for ch in self.current {
             // 입력이 초성인가?
             if self.keyboard.chosung_proc(comp: &comp, ch: ch) {
@@ -179,6 +180,15 @@ class Hangul {
         self.automata = nil
     }
     
+    func ToggleSuspend() {
+        HangulMenu.shared.self_eng_mode = !HangulMenu.shared.self_eng_mode
+        if HangulMenu.shared.self_eng_mode {
+            PrintLog.shared.Log(log: "영어")
+        } else {
+            PrintLog.shared.Log(log: "한글")
+        }
+    }
+    
     /*
      입력기 프론트엔드에 한글 오토마타 엔진이 지원하는 자판 목록과 인스턴스를 전달함
      여기에 자판 객체를 등록하면 나빌입력기 전체에서 다 참조해서 사용함
@@ -212,9 +222,20 @@ class Hangul {
     }
 
     func Process(ascii:String) -> Bool {
+        // 자체 영어 입력 모드 - 한글 오토마타를 잠시 중지하면 그게 영어 입력이다.
+        if HangulMenu.shared.self_eng_mode {
+            // 잠시 중지면 오토마타를 안돌림
+            return false
+        }
+        
+        // 한글인지 확인
         if self.keyboard?.is_hangul(ch: ascii) == false {
             return false
         }
+        // 키보드 입력 시간 델타 업데이트
+        self.keyboard?.update_key_input_time_delta()
+        PrintLog.shared.Log(log: "Key time delta \(String(describing: self.keyboard?.input_delta))")
+        
         // 키보드가 눌릴 때 마다 한 글자씩 오토마타로 넣는다.
         self.automata!.current.append(ascii)
         // 오토마타 돌린다.
@@ -255,6 +276,21 @@ class Hangul {
         self.set_commit(comp: comp)
         // 입력 버퍼를 비우면 flush!
         self.automata!.current = []
+    }
+
+    // 조합 중인 낱자 입력 개수
+    func InputCount() -> Int {
+        return self.automata?.current.count ?? 0
+    }
+
+    // 조합 중인 입력을 커밋하지 않고 조용히 버린다.
+    // (직접 삽입 모드에서 앱이 조합 글자를 이미 가져가 버린 경우 등)
+    func Discard() {
+        self.automata?.current = []
+        self.committed = []
+        self.preediting = []
+        self.debug_commit = []
+        self.debug_preedit = []
     }
 
     func GetPreedit() -> [unichar] {

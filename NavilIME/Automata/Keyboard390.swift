@@ -89,18 +89,17 @@ class Keyboard390 : Keyboard {
                 
             // 겹받침
             "xq":Jongsung.Kiyeoksios,  // ᆪ
-            "s!":Jongsung.Nieuncieuc,  // ᆬ <--  1->! 로 해야 정확할듯함.
-            "s1":Jongsung.Nieunhieuh,// ㄶ <--
-            "wx":Jongsung.Rieulkiyeok, // ㄺ <--
-            "wz":Jongsung.Rieulmieum, // ㄻ <--
+            "s1":Jongsung.Nieunhieuh,  // ᆭ  ㄴ+ㅎ (전용키 S)
+            "s!":Jongsung.Nieuncieuc,  // ᆬ  ㄴ+ㅈ
             "w3":Jongsung.Rieulpieup,  // ᆲ
             "wq":Jongsung.Rieulsios,   // ᆳ
             "wW":Jongsung.Rieulthieuth,// ᆴ
             "wQ":Jongsung.Rieulphieuph,// ᆵ
-            "w1":Jongsung.Rieulhieuh, // ㅀ < --
-            "3q":Jongsung.Pieupsios,// ㅄ <--
-
-
+            // 전용 키(D/C/V)가 따로 있지만, 낱자를 차례로 눌러서도 조합돼야 함
+            "wx":Jongsung.Rieulkiyeok, // ᆰ  ㄹ+ㄱ (전용키 D)
+            "wz":Jongsung.Rieulmieum,  // ᆱ  ㄹ+ㅁ (전용키 C)
+            "w1":Jongsung.Rieulhieuh,  // ᆶ  ㄹ+ㅎ (전용키 V)
+            "3q":Jongsung.Pieupsios,   // ㅄ  ㅂ+ㅅ (전용키 X)
         ]
         
         // 기타 기호, 숫자 레이아웃
