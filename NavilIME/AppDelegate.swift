@@ -53,10 +53,51 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         OptHandler.shared.hotkeys.append(self.shift_space_radio)
         OptHandler.shared.hotkeys.append(self.right_cmd)
         OptHandler.shared.hotkeys.append(self.right_opt)
+
+        // 라이트/다크 모드에 맞는 입력기 아이콘 적용
+        updateMenuBarIconForCurrentAppearance()
+        DistributedNotificationCenter.default().addObserver(
+            self,
+            selector: #selector(interfaceThemeChanged),
+            name: NSNotification.Name("AppleInterfaceThemeChangedNotification"),
+            object: nil
+        )
     }
 
     func applicationWillTerminate(_ notification: Notification) {
         // Insert code here to tear down your application
+    }
+
+    @objc func interfaceThemeChanged() {
+        updateMenuBarIconForCurrentAppearance()
+    }
+
+    // tsInputMethodIconFileKey는 시스템이 자동으로 다크모드에 맞춰 반전해주지 않으므로,
+    // 다크모드 변경을 감지해서 번들 안의 아이콘 파일을 직접 교체한다.
+    private func updateMenuBarIconForCurrentAppearance() {
+        guard let resourceURL = Bundle.main.resourceURL else { return }
+
+        let isDark = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") == "Dark"
+        let sourceName = isDark ? "navilime-white.png" : "navilime-black.png"
+        let sourceURL = resourceURL.appendingPathComponent(sourceName)
+        let targetURL = resourceURL.appendingPathComponent("navilime.png")
+
+        guard FileManager.default.fileExists(atPath: sourceURL.path) else { return }
+        guard let newIconData = FileManager.default.contents(atPath: sourceURL.path) else { return }
+
+        let currentIconData = FileManager.default.contents(atPath: targetURL.path)
+        if currentIconData == newIconData {
+            return
+        }
+
+        do {
+            if FileManager.default.fileExists(atPath: targetURL.path) {
+                try FileManager.default.removeItem(at: targetURL)
+            }
+            try FileManager.default.copyItem(at: sourceURL, to: targetURL)
+        } catch {
+            PrintLog.shared.Log(log: "메뉴바 아이콘 교체 실패: \(error)")
+        }
     }
     
     @IBAction func opt_dubul_sel_no_shift(_ sender: NSButton) {
